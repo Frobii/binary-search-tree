@@ -1,4 +1,4 @@
-Class Node
+class Node
 
     include Comparable
 
@@ -13,7 +13,7 @@ Class Node
 
 end
 
-Class Tree
+class Tree
 
     def initialize(array)
         @input = array
@@ -35,8 +35,13 @@ Class Tree
 
         return root
     end
-
+      
 end
 
 array = [1,2,3]
 
+tree1 = Tree.new(array)
+
+tree1.build_tree(@input)
+
+tree1.pretty_print
