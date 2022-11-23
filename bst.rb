@@ -20,4 +20,23 @@ Class Tree
         @root = nil
     end
 
+    def build_tree(array, start = 0, length)
+        length = array.length
+
+        if start > length
+            return null
+        end
+
+        mid = (start + length) / 2
+        root = Node.new(array[mid])
+
+        root.left = build_tree(array, start, mid -1)
+        root.right = build_tree(array, mid + 1, length)
+
+        return root
+    end
+
 end
+
+array = [1,2,3]
+
