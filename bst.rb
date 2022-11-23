@@ -1,4 +1,3 @@
-
 Class Node
 
     include Comparable
@@ -10,6 +9,15 @@ Class Node
         @data = value
         @left = nil
         @right = nil
+    end
+
+end
+
+Class Tree
+
+    def initialize(array)
+        @input = array
+        @root = nil
     end
 
 end
