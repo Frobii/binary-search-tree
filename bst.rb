@@ -35,6 +35,23 @@ class Tree
 
         return node
     end
+
+    def insert(key, root = @root)
+
+        if root == nil
+            return Node.new(key)
+        else
+            if root.data == key
+                return root
+            elsif root.data < key
+                root.right = insert(key, root.right)
+            else
+                root.left = insert(key, root.left)
+            end
+        end
+
+        return root
+    end
     
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -47,5 +64,9 @@ end
 array = [1,2,3,4,5,6,7]
 
 tree1 = Tree.new(array)
+
+tree1.pretty_print
+
+tree1.insert(8)
 
 tree1.pretty_print
