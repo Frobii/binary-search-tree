@@ -52,6 +52,60 @@ class Tree
 
         return root
     end
+
+    def leftmostNode(node)
+        current = node
+
+        while current.left != nil
+            current = current.left
+        end
+
+        return current
+    end
+
+    def delete(key, root = @root)
+        if root.data.nil?
+            return root
+        end
+
+        if key < root.data
+            root.left = delete(key, root.left)
+        elsif key > root.data
+            root.right = delete(key, root.right)
+        else
+            if root.left.nil?
+                temp = root.right
+                root = nil
+                return temp
+            elsif root.right.nil?
+                temp = root.left
+                root = nil
+                return temp
+            end
+            
+            temp = leftmostNode(root.right)
+
+            root.data = temp.data
+
+            root.right = delete(temp.data, root.right)
+        end
+
+        return root
+
+    end
+
+    def find(key, root = @root)
+        if root.data == key
+            return root
+        end
+
+        if key < root.data
+            root = find(key, root.left)
+        elsif key > root.data
+            root = find(key, root.right)
+        end
+    end
+
     
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
@@ -70,3 +124,9 @@ tree1.pretty_print
 tree1.insert(8)
 
 tree1.pretty_print
+
+tree1.delete(6)
+
+tree1.pretty_print
+
+p tree1.find(7)
