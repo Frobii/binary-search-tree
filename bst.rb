@@ -106,7 +106,20 @@ class Tree
         end
     end
 
-    
+    def level_order(node = @root)
+        output = []
+        queue = [node]
+
+        until queue.empty?
+            current = queue.shift
+            output.push(block_given? ? yield(current) : current.data)
+            queue.push(current.left) if current.left
+            queue.push(current.right) if current.right
+        end
+
+        output
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -130,3 +143,7 @@ tree1.delete(6)
 tree1.pretty_print
 
 p tree1.find(7)
+
+p tree1.level_order 
+
+tree1.level_order {|n| puts n.data}
