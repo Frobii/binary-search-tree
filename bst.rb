@@ -53,7 +53,7 @@ class Tree
         return root
     end
 
-    def leftmostNode(node)
+    def leftmost_node(node)
         current = node
 
         while current.left != nil
@@ -83,7 +83,7 @@ class Tree
                 return temp
             end
             
-            temp = leftmostNode(root.right)
+            temp = leftmost_node(root.right)
 
             root.data = temp.data
 
@@ -120,6 +120,20 @@ class Tree
         output
     end
 
+    def inorder(node = @root, output = [], &block)
+        if node == nil
+            return nil
+        end
+
+        inorder(node.left, output, &block)
+
+        output.push(block_given? ? block.call(node) : node.data)
+
+        inorder(node.right, output, &block)
+
+        output
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -147,3 +161,10 @@ p tree1.find(7)
 p tree1.level_order 
 
 tree1.level_order {|n| puts n.data}
+
+puts "\n"
+
+p tree1.inorder
+
+tree1.inorder {|n| puts n.data}
+
