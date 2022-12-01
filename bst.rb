@@ -126,10 +126,39 @@ class Tree
         end
 
         inorder(node.left, output, &block)
+        
+        output.push(block_given? ? block.call(node) : node.data)
+        
+        inorder(node.right, output, &block)
+
+        output
+    end
+
+    def preorder(node = @root, output = [], &block)
+        if node == nil
+            return nil
+        end
 
         output.push(block_given? ? block.call(node) : node.data)
 
-        inorder(node.right, output, &block)
+        preorder(node.left, output, &block)
+        
+        
+        preorder(node.right, output, &block)
+
+        output
+    end
+
+    def postorder(node = @root, output = [], &block)
+        if node == nil
+            return nil
+        end
+        
+        postorder(node.left, output, &block)
+        
+        postorder(node.right, output, &block)
+ 
+        output.push(block_given? ? block.call(node) : node.data)
 
         output
     end
@@ -167,4 +196,12 @@ puts "\n"
 p tree1.inorder
 
 tree1.inorder {|n| puts n.data}
+
+p tree1.preorder
+
+tree1.preorder {|n| puts n.data}
+
+p tree1.postorder
+
+tree1.postorder {|n| puts n.data}
 
