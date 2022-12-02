@@ -163,6 +163,22 @@ class Tree
         output
     end
 
+    def height(key, root = @root, height = 0)
+        
+    end
+
+    def depth(key, root = @root, height = 0)
+        if root.data == key
+            return height
+        end
+
+        if key < root.data
+            root = depth(key, root.left, height += 1)
+        elsif key > root.data
+            root = depth(key, root.right, height += 1)
+        end
+    end
+
     def pretty_print(node = @root, prefix = '', is_left = true)
         pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
         puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
@@ -205,3 +221,8 @@ p tree1.postorder
 
 tree1.postorder {|n| puts n.data}
 
+puts "\n"
+
+p tree1.height(8)
+
+p tree1.depth(8)
