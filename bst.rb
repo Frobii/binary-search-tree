@@ -163,8 +163,24 @@ class Tree
         output
     end
 
-    def height(key, root = @root, height = 0)
+    def height(key)
+        if key.is_a?(Integer)
+            key = find(key)
+        end
         
+        if key == nil
+            return -1
+        end
+
+        leftH = height(key.left)
+        rightH = height(key.right)
+
+        if leftH > rightH
+            return leftH + 1
+        else
+            return rightH + 1
+        end
+
     end
 
     def depth(key, root = @root, height = 0)
@@ -177,6 +193,27 @@ class Tree
         elsif key > root.data
             root = depth(key, root.right, height += 1)
         end
+    end
+
+    def balanced?(root = @root)
+
+
+        if height(root.left) > height(root.right)
+            if (height(root.left) - height(root.right)) > 1
+                return false
+            else
+                return true
+            end
+        elsif height(root.right) > height(root.left)
+            if (height(root.right) - height(root.left)) > 1
+                return false
+            else
+                return true
+            end
+        elsif height(root.right) == height(root.left)
+            return true
+        end
+
     end
 
     def pretty_print(node = @root, prefix = '', is_left = true)
@@ -223,6 +260,22 @@ tree1.postorder {|n| puts n.data}
 
 puts "\n"
 
+tree1.pretty_print
+
 p tree1.height(8)
 
 p tree1.depth(8)
+
+p tree1.balanced?
+
+tree1.insert(9)
+
+tree1.insert(10)
+
+tree1.pretty_print
+
+p tree1.balanced?
+
+tree1.delete(10)
+
+p tree1.balanced?
