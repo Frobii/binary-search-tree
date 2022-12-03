@@ -18,7 +18,7 @@ class Tree
     attr_writer :array, :root
 
     def initialize(array)
-        @root = build_tree(array)
+        @root = build_tree(array.sort.uniq)
     end
 
     def build_tree(array = @root, start = 0, length = array.length - 1)
@@ -229,60 +229,43 @@ class Tree
       
 end
 
-array = [1,2,3,4,5,6,7]
+array = Array.new(15) {rand(1..100)}
 
-tree1 = Tree.new(array)
+bst = Tree.new(array)
 
-tree1.pretty_print
+bst.pretty_print
 
-tree1.insert(8)
-
-tree1.pretty_print
-
-tree1.delete(6)
-
-tree1.pretty_print
-
-p tree1.find(7)
-
-p tree1.level_order 
-
-tree1.level_order {|n| puts n.data}
+puts bst.balanced? ? "The tree is balanced" : "The tree is unbalanced"
 
 puts "\n"
 
-p tree1.inorder
+p bst.level_order
+p bst.preorder
+p bst.postorder
+p bst.inorder
 
-tree1.inorder {|n| puts n.data}
-
-p tree1.preorder
-
-tree1.preorder {|n| puts n.data}
-
-p tree1.postorder
-
-tree1.postorder {|n| puts n.data}
+bst.insert(102)
+bst.insert(108)
+bst.insert(115)
+bst.insert(123)
 
 puts "\n"
 
-tree1.pretty_print
+bst.pretty_print
 
-p tree1.height(8)
+puts bst.balanced? ? "The tree is balanced" : "The tree is unbalanced"
 
-p tree1.depth(8)
+puts "\n"
 
-p tree1.balanced?
+bst.rebalance
 
-tree1.insert(9)
+bst.pretty_print
 
-tree1.insert(10)
+puts bst.balanced? ? "The tree is balanced" : "The tree is unbalanced"
 
-tree1.pretty_print
+puts "\n"
 
-p tree1.balanced?
-
-tree1.rebalance
-
-tree1.pretty_print
-
-p tree1.balanced?
+p bst.level_order
+p bst.preorder
+p bst.postorder
+p bst.inorder
